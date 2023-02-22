@@ -4,8 +4,11 @@ import {
   Button,
   Checkbox,
   Container,
+  Loader,
+  Modal,
   Notification,
   Paper,
+  RingProgress,
   SimpleGrid,
   Stack,
   Text,
@@ -43,7 +46,7 @@ const validateFn = {
 export const OrderPage: React.FC = () => {
   const [state, setState] = useSetState({
     loading: false,
-    success: false,
+    success: true,
     error: false,
   });
 
@@ -79,11 +82,12 @@ export const OrderPage: React.FC = () => {
     try {
       const res = await submitOrder(order);
       setState({ success: true });
-      const delay = (ms: number) =>
-        new Promise((resolve) => setTimeout(resolve, ms));
-      await delay(2000); /// waiting 1 second.
-      window.location.replace(res.data.invoice_url);
+      // const delay = (ms: number) =>
+      //   new Promise((resolve) => setTimeout(resolve, ms));
+      // await delay(2000); /// waiting 1 second.
+      window.location.replace(res.invoice_url);
     } catch (error) {
+      console.log(error);
       setState({
         error: true,
         loading: false,
@@ -108,11 +112,25 @@ export const OrderPage: React.FC = () => {
           alignItems: "center",
         }}
       >
-        {state.success && (
+        {/* <Modal
+          title="Pemesanan Berhasil"
+          onClose={console.log}
+          opened={false && state.success}
+        >
+          <Stack align="center">
+            <Loader />
+            <Text>
+              Anda akan segera diarahkan ke halaman pembayaran, tekan tombol
+              dibawah jika anda belum diarahkan ke halaman pembayaran
+            </Text>
+            <Button component="a">Lanjutkan pembayaran</Button>
+          </Stack>
+        </Modal> */}
+        {/* {state.success && (
           <Notification loading title="Pemesanan Berhasil" disallowClose>
             Anda akan segera diarahkan ke halaman pembayaran
           </Notification>
-        )}
+        )} */}
         {state.error && (
           <Notification
             icon={<FaExclamation />}
