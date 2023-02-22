@@ -15,6 +15,8 @@ import { FaAt, FaPhone } from "react-icons/fa";
 
 import React from "react";
 import { TravelucaHeader } from "src/components/header";
+import { useSetState } from "@mantine/hooks";
+import { TravelucaFooter } from "src/components/footer";
 
 const initialValues = {
   firstName: "",
@@ -36,13 +38,23 @@ const validateFn = {
 };
 
 export const OrderPage: React.FC = () => {
+  const [state, setState] = useSetState({
+    loading: false,
+    success: false,
+    error: false,
+  });
+
   const form = useForm({
     initialValues,
     validate: validateFn,
   });
 
-  const handleSubmit = form.onSubmit((values) => {
+  const handleSubmit = form.onSubmit(async (values) => {
     let phoneNumberFmt = values.phoneNumber;
+
+    setState({
+      loading: true,
+    });
 
     if (values.phoneNumber.startsWith("0")) {
       phoneNumberFmt = "+62" + values.phoneNumber.slice(1);
@@ -51,14 +63,24 @@ export const OrderPage: React.FC = () => {
     if (values.phoneNumber.startsWith("62")) {
       phoneNumberFmt = "+" + values.phoneNumber;
     }
-    alert(
-      JSON.stringify({ ...values, newPhoneNumber: phoneNumberFmt }, null, 2)
-    );
+
+    // const delay = (ms: number) =>
+    //   new Promise((resolve) => setTimeout(resolve, ms));
+    // await delay(1000); /// waiting 1 second.
+
+    // alert(
+    //   JSON.stringify({ ...values, newPhoneNumber: phoneNumberFmt }, null, 2)
+    // );
+
+    setState({
+      loading: false,
+    });
   });
 
   return (
     <AppShell
       header={<TravelucaHeader />}
+      footer={<TravelucaFooter />}
       styles={(theme) => ({
         main: { backgroundColor: theme.colors.gray[0] },
       })}
@@ -115,7 +137,11 @@ export const OrderPage: React.FC = () => {
                 label="Saya bersumpah, tidak akan merubah password, membagikan/menjual lagi account ini untuk keuntungan pribadi."
                 {...form.getInputProps("isSwearing", { type: "checkbox" })}
               />
-              <Button disabled={!form.values.isSwearing} type="submit">
+              <Button
+                loading={state.loading}
+                disabled={!form.values.isSwearing}
+                type="submit"
+              >
                 Beli akun ChatGPT Plus
               </Button>
             </Stack>
