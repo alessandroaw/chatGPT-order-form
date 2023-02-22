@@ -1,13 +1,17 @@
 import {
   AppShell,
+  Box,
   Button,
   Checkbox,
-  Container, Paper,
+  Container,
+  Paper,
   SimpleGrid,
   Stack,
-  TextInput
+  Text,
+  TextInput,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
+import { FaAt, FaPhone } from "react-icons/fa";
 
 import React from "react";
 import { TravelucaHeader } from "src/components/header";
@@ -27,7 +31,7 @@ const validateFn = {
   phoneNumber: matches(
     /^(\+62|62)?[\s-]?0?8[1-9]{1}\d{1}[\s-]?\d{4}[\s-]?\d{2,5}$/,
     // /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/,
-    "Masukan nomor telepon yang valid",
+    "Masukan nomor telepon yang valid"
   ),
 };
 
@@ -38,7 +42,18 @@ export const OrderPage: React.FC = () => {
   });
 
   const handleSubmit = form.onSubmit((values) => {
-    alert(JSON.stringify(values, null, 2));
+    let phoneNumberFmt = values.phoneNumber;
+
+    if (values.phoneNumber.startsWith("0")) {
+      phoneNumberFmt = "+62" + values.phoneNumber.slice(1);
+    }
+
+    if (values.phoneNumber.startsWith("62")) {
+      phoneNumberFmt = "+" + values.phoneNumber;
+    }
+    alert(
+      JSON.stringify({ ...values, newPhoneNumber: phoneNumberFmt }, null, 2)
+    );
   });
 
   return (
@@ -65,6 +80,11 @@ export const OrderPage: React.FC = () => {
           }}
         >
           <form onSubmit={handleSubmit}>
+            <Box mb="xl">
+              <Text weight="bold" size="xl" align="center">
+                Form pembelian akun ChatGPT Plus
+              </Text>
+            </Box>
             <Stack spacing="lg">
               <SimpleGrid cols={2}>
                 <TextInput
@@ -80,13 +100,15 @@ export const OrderPage: React.FC = () => {
               </SimpleGrid>
               <TextInput
                 withAsterisk
-                type="email"
                 label="Email"
+                type="email"
+                icon={<FaAt />}
                 {...form.getInputProps("email")}
               />
               <TextInput
                 withAsterisk
                 label="Nomor Telepon"
+                icon={<FaPhone />}
                 {...form.getInputProps("phoneNumber")}
               />
               <Checkbox
