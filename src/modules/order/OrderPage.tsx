@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   Container,
+  Notification,
   Paper,
   SimpleGrid,
   Stack,
@@ -11,12 +12,14 @@ import {
   TextInput,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
-import { FaAt, FaPhone } from "react-icons/fa";
+import { FaAt, FaExclamation, FaPhone } from "react-icons/fa";
 
-import React from "react";
-import { TravelucaHeader } from "src/components/header";
 import { useSetState } from "@mantine/hooks";
+import React from "react";
 import { TravelucaFooter } from "src/components/footer";
+import { TravelucaHeader } from "src/components/header";
+import { Order } from "src/models";
+import { submitOrder } from "src/repositories/order";
 
 const initialValues = {
   firstName: "",
@@ -41,7 +44,7 @@ export const OrderPage: React.FC = () => {
   const [state, setState] = useSetState({
     loading: false,
     success: false,
-    error: false,
+    error: true,
   });
 
   const form = useForm({
@@ -53,6 +56,8 @@ export const OrderPage: React.FC = () => {
     let phoneNumberFmt = values.phoneNumber;
 
     setState({
+      error: false,
+      success: false,
       loading: true,
     });
 
@@ -64,17 +69,26 @@ export const OrderPage: React.FC = () => {
       phoneNumberFmt = "+" + values.phoneNumber;
     }
 
-    // const delay = (ms: number) =>
-    //   new Promise((resolve) => setTimeout(resolve, ms));
-    // await delay(1000); /// waiting 1 second.
+    const order: Order = {
+      first_name: values.firstName,
+      last_name: values.lastName,
+      email: values.email,
+      phone: phoneNumberFmt,
+    };
 
-    // alert(
-    //   JSON.stringify({ ...values, newPhoneNumber: phoneNumberFmt }, null, 2)
-    // );
-
-    setState({
-      loading: false,
-    });
+    try {
+      const res = await submitOrder(order);
+      setState({ success: true });
+      const delay = (ms: number) =>
+        new Promise((resolve) => setTimeout(resolve, ms));
+      await delay(2000); /// waiting 1 second.
+      window.location.replace(res.data.invoice_url);
+    } catch (error) {
+      setState({
+        error: true,
+        loading: false,
+      });
+    }
   });
 
   return (
@@ -89,10 +103,26 @@ export const OrderPage: React.FC = () => {
         size="xs"
         sx={{
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
+        {state.success && (
+          <Notification loading title="Pemesanan Berhasil" disallowClose>
+            Anda akan segera diarahkan ke halaman pembayaran
+          </Notification>
+        )}
+        {state.error && (
+          <Notification
+            icon={<FaExclamation />}
+            title="Pemesanan Gagal"
+            color="red"
+            onClose={() => setState({ error: false })}
+          >
+            Terjadi kesalahan saat menghubungi server
+          </Notification>
+        )}
         <Paper
           mt="lg"
           p="lg"
@@ -129,6 +159,7 @@ export const OrderPage: React.FC = () => {
               />
               <TextInput
                 withAsterisk
+                type="text"
                 label="Nomor Telepon"
                 icon={<FaPhone />}
                 {...form.getInputProps("phoneNumber")}
