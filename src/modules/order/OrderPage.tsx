@@ -44,7 +44,7 @@ export const OrderPage: React.FC = () => {
   const [state, setState] = useSetState({
     loading: false,
     success: false,
-    error: true,
+    error: false,
   });
 
   const form = useForm({
