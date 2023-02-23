@@ -100,7 +100,7 @@ export const OrderPage: React.FC = () => {
       header={<TravelucaHeader />}
       footer={<TravelucaFooter />}
       styles={(theme) => ({
-        main: { backgroundColor: theme.colors.gray[0] },
+        main: { backgroundColor: theme.colors.gray[2] },
       })}
     >
       <Container
