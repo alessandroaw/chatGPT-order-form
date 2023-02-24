@@ -99,7 +99,7 @@ export const OrderPage: React.FC = () => {
       header={<TravelucaHeader />}
       footer={<TravelucaFooter />}
       styles={(theme) => ({
-        main: { backgroundColor: theme.colors.gray[2] },
+        main: { backgroundColor: theme.colors.gray[1] },
       })}
     >
       <Container
@@ -198,6 +198,14 @@ export const OrderPage: React.FC = () => {
               >
                 Beli akun ChatGPT Plus
               </Button>
+              <Paper withBorder p="xs" radius="md">
+                <Text size="xs">
+                  Your order and data will be processed and shared with
+                  lucacadalora.com under PT Traveluca Sejahtera Bersama for
+                  product fulfillment and PT Sinar Digital Terdepan (Xendit.co)
+                  as online payment gateway services.
+                </Text>
+              </Paper>
             </Stack>
           </form>
         </Paper>
