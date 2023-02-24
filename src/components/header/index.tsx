@@ -17,6 +17,7 @@ export const TravelucaHeader: React.FC = () => {
           href={hrefLink}
           style={{
             height: "25px",
+            width: "25px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
