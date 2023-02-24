@@ -4,11 +4,8 @@ import {
   Button,
   Checkbox,
   Container,
-  Loader,
-  Modal,
   Notification,
   Paper,
-  RingProgress,
   SimpleGrid,
   Stack,
   Text,
@@ -44,6 +41,8 @@ const validateFn = {
 };
 
 export const OrderPage: React.FC = () => {
+  const inputRadius = "md";
+
   const [state, setState] = useSetState({
     loading: false,
     success: true,
@@ -145,6 +144,7 @@ export const OrderPage: React.FC = () => {
           mt="lg"
           p="lg"
           shadow="md"
+          radius="lg"
           sx={{
             width: "100%",
           }}
@@ -158,17 +158,20 @@ export const OrderPage: React.FC = () => {
             <Stack spacing="lg">
               <SimpleGrid cols={2}>
                 <TextInput
+                  radius={inputRadius}
                   withAsterisk
                   label="Nama Depan"
                   {...form.getInputProps("firstName")}
                 />
                 <TextInput
+                  radius={inputRadius}
                   withAsterisk
                   label="Nama Belakang"
                   {...form.getInputProps("lastName")}
                 />
               </SimpleGrid>
               <TextInput
+                radius={inputRadius}
                 withAsterisk
                 label="Email"
                 type="email"
@@ -176,6 +179,7 @@ export const OrderPage: React.FC = () => {
                 {...form.getInputProps("email")}
               />
               <TextInput
+                radius={inputRadius}
                 withAsterisk
                 type="text"
                 label="Nomor Telepon"
@@ -187,6 +191,7 @@ export const OrderPage: React.FC = () => {
                 {...form.getInputProps("isSwearing", { type: "checkbox" })}
               />
               <Button
+                radius={inputRadius}
                 loading={state.loading}
                 disabled={!form.values.isSwearing}
                 type="submit"
