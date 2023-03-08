@@ -12,7 +12,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
-import { FaAt, FaExclamation, FaPhone } from "react-icons/fa";
+import { FaAt, FaExclamation, FaPhone, FaUser } from "react-icons/fa";
 
 import { useSetState } from "@mantine/hooks";
 import React from "react";
@@ -26,6 +26,7 @@ const initialValues = {
   lastName: "",
   email: "",
   phoneNumber: "",
+  profession: "",
   isSwearing: false,
 };
 
@@ -76,14 +77,12 @@ export const OrderPage: React.FC = () => {
       last_name: values.lastName,
       email: values.email,
       phone: phoneNumberFmt,
+      profession: values.profession,
     };
 
     try {
       const res = await submitOrder(order);
       setState({ success: true });
-      // const delay = (ms: number) =>
-      //   new Promise((resolve) => setTimeout(resolve, ms));
-      // await delay(2000); /// waiting 1 second.
       window.location.replace(res.invoice_url);
     } catch (error) {
       console.log(error);
@@ -111,25 +110,6 @@ export const OrderPage: React.FC = () => {
           alignItems: "center",
         }}
       >
-        {/* <Modal
-          title="Pemesanan Berhasil"
-          onClose={console.log}
-          opened={false && state.success}
-        >
-          <Stack align="center">
-            <Loader />
-            <Text>
-              Anda akan segera diarahkan ke halaman pembayaran, tekan tombol
-              dibawah jika anda belum diarahkan ke halaman pembayaran
-            </Text>
-            <Button component="a">Lanjutkan pembayaran</Button>
-          </Stack>
-        </Modal> */}
-        {/* {state.success && (
-          <Notification loading title="Pemesanan Berhasil" disallowClose>
-            Anda akan segera diarahkan ke halaman pembayaran
-          </Notification>
-        )} */}
         {state.error && (
           <Notification
             icon={<FaExclamation />}
@@ -185,6 +165,13 @@ export const OrderPage: React.FC = () => {
                 label="Nomor Telepon"
                 icon={<FaPhone />}
                 {...form.getInputProps("phoneNumber")}
+              />
+              <TextInput
+                radius={inputRadius}
+                type="text"
+                label="Profesi (opsional)"
+                icon={<FaUser />}
+                {...form.getInputProps("profession")}
               />
               <Checkbox
                 label="Saya bersumpah, tidak akan merubah password, membagikan/menjual lagi account ini untuk keuntungan pribadi."
