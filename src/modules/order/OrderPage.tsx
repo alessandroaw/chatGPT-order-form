@@ -174,7 +174,7 @@ export const OrderPage: React.FC = () => {
                 {...form.getInputProps("profession")}
               />
               <Checkbox
-                label="Saya bersumpah, tidak akan merubah password, membagikan/menjual lagi account ini untuk keuntungan pribadi."
+                label="Saya bersumpah, tidak akan mengubah password, membagikan/menjual kembali akun ini untuk keuntungan pribadi, dan tidak akan menghapus riwayat obrolan pengguna lain."
                 {...form.getInputProps("isSwearing", { type: "checkbox" })}
               />
               <Button
