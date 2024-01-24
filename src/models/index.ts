@@ -4,6 +4,7 @@ export type Order = {
   email: string;
   phone: string;
   profession?: string;
+  carbon_footprint?: boolean;
 };
 
 export type APIResponse<T> = {
