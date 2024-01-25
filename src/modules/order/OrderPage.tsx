@@ -176,7 +176,7 @@ export const OrderPage: React.FC = () => {
                 {...form.getInputProps("profession")}
               />
               <Checkbox
-                label="Pay Rp1.500 to offset your CO2 emission (Powered by CarbonShare)"
+                label="Pay Rp1.500 to offset 10 kgCO2e of your CO2e emission (Powered by CarbonShare)"
                 {...form.getInputProps("payCarbonFootprint", { type: "checkbox" })}
               />
               <Checkbox
