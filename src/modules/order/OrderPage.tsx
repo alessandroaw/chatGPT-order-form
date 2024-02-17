@@ -28,7 +28,7 @@ const initialValues = {
   phoneNumber: "",
   profession: "",
   isSwearing: false,
-  payCarbonFootprint: true,
+  payCarbonFootprint: false,
 };
 
 const validateFn = {
