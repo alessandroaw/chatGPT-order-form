@@ -10,6 +10,7 @@ import {
   Stack,
   Text,
   TextInput,
+  Alert,
 } from "@mantine/core";
 import { isEmail, isNotEmpty, matches, useForm } from "@mantine/form";
 import { FaAt, FaExclamation, FaPhone, FaUser } from "react-icons/fa";
@@ -138,6 +139,9 @@ export const OrderPage: React.FC = () => {
               </Text>
             </Box>
             <Stack spacing="lg">
+              <Alert icon={<FaExclamation size="1rem" />} title="Perhatian!">
+                Mohon maaf atas kenaikan harga akun ChatGPT menjadi Rp108.000
+              </Alert>
               <SimpleGrid cols={2}>
                 <TextInput
                   radius={inputRadius}
@@ -196,7 +200,8 @@ export const OrderPage: React.FC = () => {
                   Your order and data will be processed and shared with
                   lucacadalora.com under PT Traveluca Sejahtera Bersama for
                   product fulfillment and PT Sinar Digital Terdepan (Xendit.co)
-                  as online payment gateway services. Carbon Purchase Removal powered by CarbonShare
+                  as online payment gateway services. Carbon Purchase Removal
+                  powered by CarbonShare
                 </Text>
               </Paper>
             </Stack>
