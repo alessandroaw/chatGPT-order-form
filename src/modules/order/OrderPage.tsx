@@ -29,7 +29,7 @@ const initialValues = {
   phoneNumber: "",
   profession: "",
   isSwearing: false,
-  payCarbonFootprint: false,
+  payCarbonFootprint: true,
 };
 
 const validateFn = {
@@ -179,10 +179,10 @@ export const OrderPage: React.FC = () => {
                 icon={<FaUser />}
                 {...form.getInputProps("profession")}
               />
-              {/* <Checkbox
+              <Checkbox
                 label="Pay Rp1.500 to offset 10 kgCO2e of your CO2e emission (Powered by CarbonShare)"
                 {...form.getInputProps("payCarbonFootprint", { type: "checkbox" })}
-              /> */}
+              />
               <Checkbox
                 label="Saya bersumpah, tidak akan mengubah password, membagikan/menjual kembali akun ini untuk keuntungan pribadi, dan tidak akan menghapus riwayat obrolan pengguna lain."
                 {...form.getInputProps("isSwearing", { type: "checkbox" })}
